@@ -23,21 +23,25 @@ To check the Dataset file in current wworking directory run the following code.
 
 2. Read activity_lables.txt file and set names of the variables
 	labels <- fread("activity_labels.txt", header = FALSE)
-    setnames(labels, c("LABEL_LEVEL", "Behaviour"))
+    	setnames(labels, c("LABEL_LEVEL", "Behaviour"))
 
 3. Read the features.txt and set varaiable name
+
 	features <- fread("features.txt", header = FALSE)
   	setnames(features,  c("FEATURE_No", "FEATURE_Fun"))
 
 4. Finding the required index of mean and standard deviation fun in features 
+
 	Descrips <- features[grep("-mean\\(\\)|-std\\(\\)", features[, features$FEATURE_Fun], )
 
 5. Appropriate lable to feature fun descriptions
+
 	Descrips$FEATURE_Fun <- gsub("-mean\\(\\)", "Mean", Descrips$FEATURE_Fun)
 	Descrips$FEATURE_Fun <- gsub("-std\\(\\)", "Stdev", Descrips$FEATURE_Fun)
 
 6. LoadData function 
-		loadData <- function(type, Descrips) {
+
+	 loadData <- function(type, Descrips) {
 	  print(paste("Reading data from", type, "folder"))
 	  if (!file.exists(type)) {
 	    stop(paste("Couldn't find", type, "folder"))
@@ -90,10 +94,12 @@ To check the Dataset file in current wworking directory run the following code.
 
 
 7. Assign testData and trainData from loadData fun
+
 	testData <- loadData("test", Descrips)
 	trainData <- loadData("train", Descrips)
 
 8. Merge test and train data in one data set
+
 	mergedData <<- rbind(testData, trainData)
 
 	mergedData$ACTIVITY <<- factor(mergedData$ACTIVITY, 
@@ -102,11 +108,13 @@ To check the Dataset file in current wworking directory run the following code.
 
 
 9. Create TidyData by summarizing mean of each actvity and subject
+
 	summaryData <<- aggregate(mergedData[, 3:ncol(mergedData), with = FALSE], by = 
 	                              list(ACTIVITY = mergedData$ACTIVITY, 
 	                                   SUBJECT = mergedData$SUBJECT), 
 	                            FUN = mean)
 10. Write TidyData.txt file
+
 	write.table(summaryData, "tidyData/TidyData.txt", row.names = FALSE)
 
 ## Note ##
