@@ -1,4 +1,4 @@
- setwd("C:/Users/User/Desktop/Rdirectory/Getting_Data")
+setwd("C:/Users/User/Desktop/Rdirectory/Getting_Data")
 library(data.table)
 
 CodeRunner <- function() {
@@ -9,9 +9,9 @@ CodeRunner <- function() {
   
   print("Reading labels...")
   # Read activity labels
- 
+  
   labels <- fread("activity_labels.txt", header = FALSE)
-  setnames(labels, c("LABEL_LEVEL", "Behaviour"))
+  setnames(labels, c("Level", "Behaviour"))
   print(labels)
   
   print("Reading features...")
@@ -35,7 +35,7 @@ CodeRunner <- function() {
   
   #Uses descriptive activity names to name the activities in the data set
   mergedData$ACTIVITY <<- factor(mergedData$ACTIVITY, 
-                                 levels = labels$LABEL_LEVEL, 
+                                 levels = labels$Level, 
                                  labels = labels$Behaviour)
   
   # Creates summarized tidy data set with mean of each activity and subject
@@ -57,7 +57,7 @@ CodeRunner <- function() {
   
   
   write.table(summaryData, "tidyData/TidyData.txt", row.names = FALSE)
- 
+  
   
 }
 
@@ -96,7 +96,7 @@ loadData <- function(type, Descrips) {
   setnames(yData, "ACTIVITY")
   
   # Read the data file
-   
+  
   xData <- read.table(x, header = FALSE, colClasses = rep("numeric", 561), 
                       quote="", stringsAsFactors = FALSE, comment.char="", 
                       nrows = dataSize)
