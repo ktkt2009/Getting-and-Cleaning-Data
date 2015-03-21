@@ -23,7 +23,7 @@ To check the Dataset file in current wworking directory run the following code.
 
 2. Read activity_lables.txt file and set names of the variables
 	labels <- fread("activity_labels.txt", header = FALSE)
-    	setnames(labels, c("LABEL_LEVEL", "Behaviour"))
+    	setnames(labels, c("Level", "Behaviour"))
 
 3. Read the features.txt and set varaiable name
 
@@ -103,7 +103,7 @@ To check the Dataset file in current wworking directory run the following code.
 	mergedData <<- rbind(testData, trainData)
 
 	mergedData$ACTIVITY <<- factor(mergedData$ACTIVITY, 
-	                                 levels = labels$LABEL_LEVEL, 
+	                                 levels = labels$Level, 
 	                                 labels = labels$Behaviour)
 
 
